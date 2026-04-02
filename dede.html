@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday 🎉</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #ffffff 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            color: #fff;
+        }
+
+        /* Animasi Hujan Cinta */
+        .love-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            color: #fff;
+            font-size: 20px;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Game Container */
+        .game-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 60, 114, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: all 1s ease;
+        }
+
+        .game-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3); }
+            to { text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6); }
+        }
+
+        .code-game {
+            background: rgba(255,255,255,0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .hint {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #e0f7ff;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        input[type="password"] {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 1.2rem 2rem;
+            font-size: 1.5rem;
+            color: #fff;
+            width: 250px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 5px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+            transform: scale(1.05);
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Pesan Container */
+        .message-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s ease;
+            z-index: 50;
+        }
+
+        .message-container.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .paper {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            padding: 4rem;
+            border-radius: 25px;
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            max-width: 700px;
+            position: relative;
+            transform: rotate(-2deg);
+            border: 8px solid #d4d4d4;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+        }
+
+        .paper::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,107,107,0.5);
+        }
+
+        .paper::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-top: 20px solid #d4d4d4;
+        }
+
+        .birthday-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .message-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 400;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+
+        .hearts-bottom {
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .music-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 200;
+            transition: all 0.3s ease;
+        }
+
+        .music-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .title { font-size: 2.5rem; }
+            .paper { padding: 2rem; margin: 1rem; }
+            .message-text { font-size: 1.1rem; }
+            input[type="password"] { width: 200px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Tombol Musik -->
+    <button class="music-btn" id="musicBtn" onclick="toggleMusic()">🎵</button>
+
+    <!-- Audio -->
+    <audio id="birthdaySong" loop>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.wav" type="audio/wav">
+        <!-- Fallback: bisa ganti dengan URL lagu birthday lain -->
+    </audio>
+
+    <!-- Game Container -->
+    <div class="game-container" id="gameContainer">
+        <h1 class="title"> Happy Birthday Sayangkuu </h1>
+        <div class="code-game">
+            <div class="hint">🔐 Masukkan kode rahasia untuk membuka pesan rahasia...</div>
+            <div style="font-size: 1.2rem; margin-bottom: 1rem; color: #e0f7ff;">
+                Hint: your birthday
+            </div>
+            <div class="input-group">
+                <input type="password" id="codeInput" maxlength="8" placeholder="____ ____">
+            </div>
+            <button class="btn" onclick="checkCode()">Buka Pesan</button>
+        </div>
+    </div>
+
+    <!-- Pesan Container -->
+    <div class="message-container" id="messageContainer">
+        <div class="paper">
+            <h2 class="birthday-title">Happy Birthday, My Love! 💙🤍</h2>
+            <div class="message-text">
+                Happy birthday to the special person in ma life. Thank u for being part of ma life, thank u for sticking around all this time, thank u for growing well, thank u for always being source of ma happiness, thank u for always making me laugh, and thank u for everything. 
+                <br><br>
+                I hope that on this special day u are surrounded by happiness, filled w joy, and bless with love. I will always be here for u. U will never lose ma love bc u are the best person I've ever seen. U are amazing and worth a lot on this earth. 
+                <br><br>
+                Please stay healthy and always happy, because I love u more than yesterday and will always love u until tomorrow. 
+                <br><br>
+                <strong>Happy Birthday ma lovee 🤍🤍🤍</strong>
+            </div>
+            <div class="hearts-bottom">💙💙💙💙💙💙💙💙💙</div>
+        </div>
+    </div>
+
+    <!-- Hujan Cinta -->
+    <div class="love-rain" id="loveRain"></div>
+
+    <script>
+        const CORRECT_CODE = "03042008";
+        let musicPlaying = false;
+
+        // Cek kode
+        function checkCode() {
+            const input = document.getElementById('codeInput').value;
+            if (input === CORRECT_CODE) {
+                document.getElementById('gameContainer').classList.add('hidden');
+                setTimeout(() => {
+                    document.getElementById('messageContainer').classList.add('show');
+                    startLoveRain();
+                    playMusic();
+                }, 1000);
+            } else {
+                // Efek shake salah
+                const input = document.getElementById('codeInput');
+                input.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    input.style.animation = '';
+                }, 500);
+                input.value = '';
+            }
+        }
+
+        // Enter key support
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkCode();
+            }
+        });
+
+        // Hujan Cinta
+        function startLoveRain() {
+            const loveRain = document.getElementById('loveRain');
+            const hearts = ['💙', '💜', '💖', '🤍', '🩵', '💕'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 15) + 'px';
+                loveRain.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 200);
+        }
+
+        // Musik
+        function toggleMusic() {
+            const audio = document.getElementById('birthdaySong');
+            if (musicPlaying) {
+                audio.pause();
+                musicPlaying = false;
+                document.getElementById('musicBtn').textContent = '🎵';
+            } else {
+                audio.play().catch(e => console.log('Audio play failed'));
+                musicPlaying = true;
+                document.getElementById('musicBtn').textContent = '🔇';
+            }
+        }
+
+        function playMusic() {
+            const audio = document.getElementById('birthdaySong');
+            audio.play().catch(e => console.log('Auto play blocked'));
+            musicPlaying = true;
+            document.getElementById('musicBtn').textContent = '🔇';
+        }
+
+        // Tambah CSS shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
